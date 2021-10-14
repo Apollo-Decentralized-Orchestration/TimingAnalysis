@@ -54,7 +54,7 @@ public class EvaluatorTest {
      *
      * @param eGraph the graph to generate the specification from.
      *
-     * @return the generated specification.
+     * @return the generated specification.dd
      */
     private EnactmentSpecification setupSpecification(EnactmentGraph eGraph) {
 

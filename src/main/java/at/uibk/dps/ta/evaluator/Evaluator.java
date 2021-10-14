@@ -28,7 +28,7 @@ public class Evaluator {
      *
      * @return a collection of leaf nodes.
      */
-    private Collection<Task> getRootNodes(EnactmentGraph eGraph) {
+    private Collection<Task> getRootNodes(final EnactmentGraph eGraph) {
         return eGraph.getVertices()
             .stream()
             .filter(task -> task instanceof Communication && PropertyServiceData.isRoot(task))
@@ -43,7 +43,7 @@ public class Evaluator {
      *
      * @return list of predecessor task nodes.
      */
-    private Collection<Task> getPredecessorTaskNodes(EnactmentGraph eGraph, Task node) {
+    private Collection<Task> getPredecessorTaskNodes(final EnactmentGraph eGraph, final Task node) {
         if(node instanceof Communication) {
 
             // The predecessor of a communication node is a task node
@@ -51,7 +51,7 @@ public class Evaluator {
         } else {
 
             // The predecessor of a task node is a communication node (which predecessor is a task node)
-            Collection<Task> predecessorTasks = new ArrayList<>();
+            final Collection<Task> predecessorTasks = new ArrayList<>();
             eGraph.getPredecessors(node).forEach((pS) -> predecessorTasks.addAll(eGraph.getPredecessors(pS)));
             return predecessorTasks;
         }
@@ -73,7 +73,7 @@ public class Evaluator {
         } else {
 
             // The successor of a task node is a communication node (which successor is a task node)
-            Collection<Task> successorTasks = new ArrayList<>();
+            final Collection<Task> successorTasks = new ArrayList<>();
             eGraph.getSuccessors(node).forEach((pS) -> successorTasks.addAll(eGraph.getSuccessors(pS)));
             return successorTasks;
         }
@@ -88,18 +88,15 @@ public class Evaluator {
      *
      * @return the duration of the task on the specified resource.
      */
-    private double getDuration(Task task, EnactmentSpecification specification, boolean useGlobalLatency) {
+    private double getDuration(final Task task, final EnactmentSpecification specification, boolean useGlobalLatency) {
 
         // Get the mappings of the specified task
-        Set<Mapping<Task, Resource>> taskMappings = specification.getMappings().getMappings(task);
+        final Set<Mapping<Task, Resource>> taskMappings = specification.getMappings().getMappings(task);
 
         // Only one mapping should be present
-        if(taskMappings.size() != 1) {
+        if(taskMappings.size() == 1) {
 
-            throw new IllegalArgumentException(taskMappings.size() + " mappings exist for task " + task.getId() + ". There should be exactly one mapping.");
-        } else {
-
-            Mapping<Task, Resource> map = taskMappings.iterator().next();
+            final Mapping<Task, Resource> map = taskMappings.iterator().next();
 
             // Get the duration of the task at the resource
             double duration = PropertyServiceTiming.getDuration(map);
@@ -109,6 +106,8 @@ public class Evaluator {
 
             // Return total duration
             return duration;
+        } else {
+            throw new IllegalArgumentException(taskMappings.size() + " mappings exist for task " + task.getId() + ". There should be exactly one mapping.");
         }
     }
 
@@ -121,17 +120,17 @@ public class Evaluator {
      *
      * @return true if a predecessor has a top cut global latency should be used
      */
-    private boolean hasPredecessorTopCutAndUseGlobalLatency(EnactmentGraph eGraph, Task current, List<Cut> cuts) {
+    private boolean hasPredecessorTopCutAndUseGlobalLatency(final EnactmentGraph eGraph, final Task current, final List<Cut> cuts) {
 
         // Get all predecessors
-        Collection<Task> predecessor = eGraph.getPredecessors(current);
-        Queue<Task> queue = new LinkedList<>(predecessor);
+        final Collection<Task> predecessor = eGraph.getPredecessors(current);
+        final Queue<Task> queue = new LinkedList<>(predecessor);
 
         // Iterate over all predecessors
         while(!queue.isEmpty()) {
 
             // Get first task in the queue
-            Task task = queue.poll();
+            final Task task = queue.poll();
             boolean continueAbove = true;
 
             // Iterate over all cuts
@@ -163,19 +162,19 @@ public class Evaluator {
      *
      * @return the expected duration of the graph.
      */
-    public double evaluate(EnactmentSpecification specification, List<Cut> cuts) {
+    public double evaluate(final EnactmentSpecification specification, final List<Cut> cuts) {
 
         // Get the enactment graph
-        EnactmentGraph eGraph = specification.getEnactmentGraph();
+        final EnactmentGraph eGraph = specification.getEnactmentGraph();
 
         // Store the durations of the leaf nodes
-        List<Double> durationLeafNodes = new ArrayList<>();
+        final List<Double> durationLeafNodes = new ArrayList<>();
 
         // Contains tasks to be checked
-        Queue<Task> queue = new LinkedList<>();
+        final Queue<Task> queue = new LinkedList<>();
 
         // Keep track of the task durations
-        HashMap<String, Double> taskDurations = new HashMap<>();
+        final HashMap<String, Double> taskDurations = new HashMap<>();
 
         // Add successors of root communication nodes to the queue and calculate their durations
         getRootNodes(eGraph).forEach((rootNodes) -> {
@@ -186,16 +185,16 @@ public class Evaluator {
         while(!queue.isEmpty()) {
 
             // Get the first element in the queue
-            Task current = queue.poll();
+            final Task current = queue.poll();
 
             // Get the successors of the task to check
-            Collection<Task> successors = getSuccessorTaskNodes(eGraph, current);
+            final Collection<Task> successors = getSuccessorTaskNodes(eGraph, current);
 
             // Iterate over all successors
             for(Task successor: successors) {
 
                 // Get all predecessors of the successor (to check if all durations are set)
-                Collection<Task> predecessors = getPredecessorTaskNodes(eGraph, successor);
+                final Collection<Task> predecessors = getPredecessorTaskNodes(eGraph, successor);
 
                 // Keeps track if all predecessor durations are set
                 boolean allSet = true;
@@ -234,7 +233,7 @@ public class Evaluator {
                     taskDurations.put(successor.getId(), maxDuration);
 
                     // Check if following communication node is leaf node
-                    Collection<Task> commNodeSuccessors = eGraph.getSuccessors(successor);
+                    final Collection<Task> commNodeSuccessors = eGraph.getSuccessors(successor);
                     for (Task commNodeSuccessor: commNodeSuccessors){
                         if(PropertyServiceData.isLeaf(commNodeSuccessor)){
                             durationLeafNodes.add(maxDuration);
