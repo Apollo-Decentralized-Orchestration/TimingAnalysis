@@ -174,8 +174,8 @@ public class Evaluator {
      * @param queue the queue containing tasks to check.
      * @param current the current task.
      */
-    private void checkDuration(final boolean allSet, final HashMap<String, Double> taskDurations,
-        EnactmentGraph eGraph, final Task successor, final double maxDuration, final Task current,
+    private void checkDuration(final boolean allSet, final Map<String, Double> taskDurations,
+        final EnactmentGraph eGraph, final Task successor, final double maxDuration, final Task current,
         final List<Double> durationLeafNodes, final Queue<Task> queue) {
 
         // If all predecessor durations are set
@@ -211,7 +211,7 @@ public class Evaluator {
      * @param current the current task.
      */
     private void calcDuration(final EnactmentGraph eGraph, final Collection<Task> successors,
-        final List<Cut> cuts, final HashMap<String, Double> taskDurations,
+        final List<Cut> cuts, final Map<String, Double> taskDurations,
         final EnactmentSpecification specification, final List<Double> durationLeafNodes,
         final Queue<Task> queue, final Task current) {
 
