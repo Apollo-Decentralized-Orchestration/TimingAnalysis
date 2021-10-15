@@ -23,7 +23,7 @@ public class Evaluator {
     /**
      * The amount of needed mappings.
      */
-    private final int NUM_MAPPINGS = 1;
+    private final static int NUM_MAPPINGS = 1;
 
     /**
      * Get all root nodes (nodes containing attribute Leaf) in
@@ -163,6 +163,42 @@ public class Evaluator {
     }
 
     /**
+     * Set the duration or add tasks that need to be inspected first.
+     *
+     * @param allSet if all predecessor durations are set.
+     * @param successor the successor task.
+     * @param maxDuration the duration to set.
+     * @param eGraph the graph.
+     * @param taskDurations the task durations.
+     * @param durationLeafNodes the leaf node durations.
+     * @param queue the queue containing tasks to check.
+     * @param current the current task.
+     */
+    private void checkDuration(final boolean allSet, final HashMap<String, Double> taskDurations,
+        EnactmentGraph eGraph, final Task successor, final double maxDuration, final Task current,
+        final List<Double> durationLeafNodes, final Queue<Task> queue) {
+
+        // If all predecessor durations are set
+        if(allSet) {
+
+            // Add newly calculated duration for successor task
+            taskDurations.put(successor.getId(), maxDuration);
+
+            // Check if following communication node is leaf node
+            final Collection<Task> commNodeSuccessors = eGraph.getSuccessors(successor);
+            for (final Task commNodeSuccessor: commNodeSuccessors){
+                if(PropertyServiceData.isLeaf(commNodeSuccessor)){
+                    durationLeafNodes.add(maxDuration);
+                }
+            }
+
+        } else {
+            // Add task to queue (check later if all predecessor durations are set)
+            queue.add(current);
+        }
+    }
+
+    /**
      * Calculate the duration of successor graphs.
      *
      * @param eGraph the graph.
@@ -215,24 +251,7 @@ public class Evaluator {
                 }
             }
 
-            // If all predecessor durations are set
-            if(allSet) {
-
-                // Add newly calculated duration for successor task
-                taskDurations.put(successor.getId(), maxDuration);
-
-                // Check if following communication node is leaf node
-                final Collection<Task> commNodeSuccessors = eGraph.getSuccessors(successor);
-                for (final   Task commNodeSuccessor: commNodeSuccessors){
-                    if(PropertyServiceData.isLeaf(commNodeSuccessor)){
-                        durationLeafNodes.add(maxDuration);
-                    }
-                }
-
-            } else {
-                // Add task to queue (check later if all predecessor durations are set)
-                queue.add(current);
-            }
+            checkDuration(allSet, taskDurations, eGraph, successor, maxDuration, current, durationLeafNodes, queue);
         }
     }
 
