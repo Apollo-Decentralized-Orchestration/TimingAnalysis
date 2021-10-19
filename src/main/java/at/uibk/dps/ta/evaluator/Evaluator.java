@@ -23,7 +23,7 @@ public class Evaluator {
     /**
      * The amount of needed mappings.
      */
-    private final static int NUM_MAPPINGS = 1;
+    protected final static int NUM_MAPPINGS = 1;
 
     /**
      * Get all root nodes (nodes containing attribute Leaf) in
@@ -33,7 +33,7 @@ public class Evaluator {
      *
      * @return a collection of leaf nodes.
      */
-    private Collection<Task> getRootNodes(final EnactmentGraph eGraph) {
+    protected Collection<Task> getRootNodes(final EnactmentGraph eGraph) {
         return eGraph.getVertices()
             .stream()
             .filter(task -> task instanceof Communication && PropertyServiceData.isRoot(task))
@@ -48,7 +48,7 @@ public class Evaluator {
      *
      * @return list of predecessor task nodes.
      */
-    private Collection<Task> getPredecessorTaskNodes(final EnactmentGraph eGraph, final Task node) {
+    protected Collection<Task> getPredecessorTaskNodes(final EnactmentGraph eGraph, final Task node) {
         if(node instanceof Communication) {
 
             // The predecessor of a communication node is a task node
@@ -71,7 +71,7 @@ public class Evaluator {
      *
      * @return list of successor task nodes.
      */
-    private Collection<Task> getSuccessorTaskNodes(final EnactmentGraph eGraph, final Task node) {
+    protected Collection<Task> getSuccessorTaskNodes(final EnactmentGraph eGraph, final Task node) {
         if(node instanceof Communication) {
 
             // The successor of a communication node is a task node
@@ -95,7 +95,7 @@ public class Evaluator {
      *
      * @return the duration of the task on the specified resource.
      */
-    private double getDuration(final Task task, final EnactmentSpecification specification, final boolean useGlobalLatency) {
+    protected double getDuration(final Task task, final EnactmentSpecification specification, final boolean useGlobalLatency) {
 
         // Get the mappings of the specified task
         final Set<Mapping<Task, Resource>> taskMappings = specification.getMappings().getMappings(task);
@@ -128,7 +128,7 @@ public class Evaluator {
      *
      * @return true if a predecessor has a top cut global latency should be used
      */
-    private boolean hasPredecessorTopCutAndUseGlobalLatency(final EnactmentGraph eGraph, final Task current, final List<Cut> cuts) {
+    protected boolean hasPredecessorTopCutAndUseGlobalLatency(final EnactmentGraph eGraph, final Task current, final List<Cut> cuts) {
 
         // Get all predecessors
         final Collection<Task> predecessor = eGraph.getPredecessors(current);
@@ -174,7 +174,7 @@ public class Evaluator {
      * @param queue the queue containing tasks to check.
      * @param current the current task.
      */
-    private void checkDuration(final boolean allSet, final Map<String, Double> taskDurations,
+    protected void checkDuration(final boolean allSet, final Map<String, Double> taskDurations,
         final EnactmentGraph eGraph, final Task successor, final double maxDuration, final Task current,
         final List<Double> durationLeafNodes, final Queue<Task> queue) {
 
@@ -210,7 +210,7 @@ public class Evaluator {
      * @param queue the queue containing tasks to check.
      * @param current the current task.
      */
-    private void calcDuration(final EnactmentGraph eGraph, final Collection<Task> successors,
+    protected void calcDuration(final EnactmentGraph eGraph, final Collection<Task> successors,
         final List<Cut> cuts, final Map<String, Double> taskDurations,
         final EnactmentSpecification specification, final List<Double> durationLeafNodes,
         final Queue<Task> queue, final Task current) {
