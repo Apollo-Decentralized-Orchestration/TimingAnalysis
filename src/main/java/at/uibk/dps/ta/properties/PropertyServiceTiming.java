@@ -103,10 +103,7 @@ public class PropertyServiceTiming extends AbstractPropertyService {
    * @return the number of instances of the given resource
    */
   public static int getInstances(final Resource res) {
-    if (isAttributeSet(res, propNameInstances)) {
-      return res.getAttribute(propNameInstances);
-    }
-    return -1;
+    return (int) getAttribute(res, propNameInstances);
   }
 
   /**
@@ -116,10 +113,7 @@ public class PropertyServiceTiming extends AbstractPropertyService {
    * @return the global latency of the given resource
    */
   public static double getLatencyGlobal(final Resource res) {
-    if (isAttributeSet(res, propNameLatencyGlobal)) {
-      return res.getAttribute(propNameLatencyGlobal);
-    }
-    return -1.0;
+    return (double) getAttribute(res, propNameLatencyGlobal);
   }
 
   /**
@@ -129,9 +123,6 @@ public class PropertyServiceTiming extends AbstractPropertyService {
    * @return the local latency of the given resource
    */
   public static double getLatencyLocal(final Resource res) {
-    if (isAttributeSet(res, propNameLatencyLocal)) {
-      return res.getAttribute(propNameLatencyLocal);
-    }
-    return -1.0;
+    return (double) getAttribute(res, propNameLatencyLocal);
   }
 }
