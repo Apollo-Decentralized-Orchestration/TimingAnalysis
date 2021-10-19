@@ -1,0 +1,17 @@
+<configuration>
+  <module class="at.uibk.dps.ta.modules.ApplicationTimingModule">
+    <property name="maxCutNumber">1</property>
+  </module>
+  <module class="org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule">
+    <property name="generations">1000</property>
+    <property name="populationSize">100</property>
+    <property name="parentsPerGeneration">25</property>
+    <property name="offspringsPerGeneration">25</property>
+    <property name="crossoverRate">0.95</property>
+  </module>
+  <module class="org.opt4j.viewer.ViewerModule">
+    <property name="closeEvent">STOP</property>
+    <property name="closeOnStop">false</property>
+    <property name="title">Opt4J -SNAPSHOT Viewer</property>
+  </module>
+</configuration>

@@ -4,7 +4,7 @@ import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import at.uibk.dps.ee.model.properties.PropertyServiceData;
-import at.uibk.dps.ee.model.properties.PropertyServiceTiming;
+import at.uibk.dps.ta.properties.PropertyServiceTiming;
 import net.sf.opendse.model.Communication;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
