@@ -1,7 +1,7 @@
 buildscript {
-    repositories {
-        jcenter()
-    }
+  repositories {
+    jcenter()
+  }
 }
 
 apply plugin: 'java'
@@ -10,62 +10,64 @@ apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 // for compliance with higher Java versions
 jacoco {
-    toolVersion = "0.8.5"
+  toolVersion = "0.8.5"
 }
 
 group 'Timing-Analysis'
 version '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()
-    maven {
-        name "jitpack"
-        url 'https://jitpack.io' }
+  mavenCentral()
+  maven {
+    name "jitpack"
+    url 'https://jitpack.io' }
 }
 
 dependencies {
 
-    if (project.hasProperty("local")) {
-        implementation project (':EE-Model')
-    }else {
-        // dependencies to other parts of the Apollo Core EE
-        implementation 'com.github.Apollo-Core:EE-Model:propServiceAdaptation-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-Deploy:-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:EE-Visualization:master-SNAPSHOT'
-        implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
-        implementation 'com.github.Apollo-core:EE-Docker:master-SNAPSHOT'
-        implementation 'com.github.Apollo-Decentralized-Orchestration:DO-Incision:main-SNAPSHOT'
-    }
+  if (project.hasProperty("local")) {
+    implementation project (':EE-Model')
+  }else {
+    // dependencies to other parts of the Apollo Core EE
+    implementation 'com.github.Apollo-Core:EE-Model:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Deploy:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-IO:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Core:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Guice:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Enactables:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Control:v1.0.0'
+    implementation 'com.github.Apollo-Core:EE-Visualization:v1.0.0'
+    implementation 'com.github.Apollo-Core:SC-Core:v1.0.0'
+    implementation 'com.github.Apollo-core:EE-Docker:v1.0.0'
+    implementation 'com.github.Apollo-Decentralized-Orchestration:DO-Incision:main-SNAPSHOT'
+  }
 
-    // dependency to opendse
-    implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
+  // dependency to Opt4J
+  implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
+  // dependency to opendse
+  implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
 
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation group: 'com.io7m.xom', name: 'xom', version: '1.2.10'
+  // Gson
+  implementation 'com.google.code.gson:gson:2.8.6'
+  implementation group: 'com.io7m.xom', name: 'xom', version: '1.2.10'
 
-    // JUnit 5
-    testImplementation(platform('org.junit:junit-bom:5.7.2'))
-    testImplementation('org.junit.jupiter:junit-jupiter')
-    implementation 'org.xmlunit:xmlunit-core:2.2.1'
+  // JUnit 5
+  testImplementation(platform('org.junit:junit-bom:5.7.2'))
+  testImplementation('org.junit.jupiter:junit-jupiter')
+  implementation 'org.xmlunit:xmlunit-core:2.2.1'
 }
 
 jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
-    afterEvaluate {
-        classDirectories.from = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: '**/modules/**')
-        })
-    }
+  reports {
+    xml.enabled true
+  }
+  afterEvaluate {
+    classDirectories.from = files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: '**/modules/**')
+    })
+  }
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
