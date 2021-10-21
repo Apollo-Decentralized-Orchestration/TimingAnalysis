@@ -1,5 +1,6 @@
 package at.uibk.dps.ta.utils;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,12 +31,24 @@ public class CutDecoding {
    * @param maxCutNumber the maximum number of cuts
    * @return the cuts annotated in the given graph
    */
-  public static Set<Cut> decodeCuts(final EnactmentGraph eGraph, int maxCutNumber) {
+  public static Set<Cut> decodeCuts(final EnactmentGraph eGraph) {
     Set<Cut> result = new HashSet<>();
-    for (int cutIdx = 1; cutIdx < maxCutNumber; cutIdx++) {
+    for (int cutIdx = 1; cutIdx <= findMaxCutNum(eGraph); cutIdx++) {
       result.add(findCutForIdx(eGraph, cutIdx));
     }
     return result;
+  }
+
+  /**
+   * Finds the max cut number in the graph
+   * 
+   * @param graph the enactment graph
+   * @return the largest cut label present in the graph
+   */
+  static int findMaxCutNum(final EnactmentGraph graph) {
+    Task maxCutTask = graph.getVertices().stream().filter(task -> TaskPropertyService.isProcess(task))
+        .max(Comparator.comparing(task -> PsGraphCut.getCut(task))).get();
+    return PsGraphCut.getCut(maxCutTask);
   }
 
   /**

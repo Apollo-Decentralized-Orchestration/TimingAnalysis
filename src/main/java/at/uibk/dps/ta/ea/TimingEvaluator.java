@@ -5,9 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
-import org.opt4j.core.start.Constant;
 import org.opt4j.core.Objectives;
-import com.google.inject.Inject;
 import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import at.uibk.dps.ee.model.graph.MappingsConcurrent;
@@ -29,19 +27,12 @@ import net.sf.opendse.model.Task;
 public class TimingEvaluator implements org.opt4j.core.problem.Evaluator<EnactmentSpecification> {
 
   protected final Objective applicationLatency = new Objective("Latency", Sign.MIN);
-  protected final int maxCutNum;
-
-  @Inject
-  public TimingEvaluator(
-      @Constant(namespace = TimingCreatorDecoder.class, value = "maxCutNumber") int maxCutNum) {
-    this.maxCutNum = maxCutNum;
-  }
 
   @Override
   public Objectives evaluate(EnactmentSpecification spec) {
     Evaluator timingEval = new Evaluator();
     removeMappings(spec.getMappings());
-    Set<Cut> cuts = CutDecoding.decodeCuts(spec.getEnactmentGraph(), maxCutNum);
+    Set<Cut> cuts = CutDecoding.decodeCuts(spec.getEnactmentGraph());
     double result = timingEval.evaluate(spec, new ArrayList<>(cuts));
     Objectives objectives = new Objectives();
     objectives.add(applicationLatency, result);
