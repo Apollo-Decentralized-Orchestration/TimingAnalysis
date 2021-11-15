@@ -1,11 +1,11 @@
 package at.uibk.dps.ta.evaluator;
 
+import at.uibk.dps.di.properties.PropertyServiceScheduler;
 import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.ee.io.resources.ResourceGraphProviderFile;
 import at.uibk.dps.ee.io.spec.SpecificationProviderFile;
 import at.uibk.dps.ee.model.graph.*;
 import at.uibk.dps.ta.constants.AnnotatedEnactmentSpecifications;
-import at.uibk.dps.ta.properties.PropertyServiceTiming;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
@@ -67,15 +67,17 @@ public class EvaluatorTest {
 
         // Set up resource instances and latency
         Resource local = specification.getResourceGraph().getVertex(localResourceName);
-        PropertyServiceTiming.setLatencyLocal(local, 0.0);
-        PropertyServiceTiming.setLatencyGlobal(local, 0.0);
+        PropertyServiceScheduler.setLatencyLocal(local, 0.0);
+        PropertyServiceScheduler.setLatencyGlobal(local, 0.0);
+        PropertyServiceScheduler.setInstances(local, 2);
         Resource noop = specification.getResourceGraph().getVertex(cloudResourceName);
-        PropertyServiceTiming.setLatencyLocal(noop, 200.0);
-        PropertyServiceTiming.setLatencyGlobal(noop, 500.0);
+        PropertyServiceScheduler.setLatencyLocal(noop, 200.0);
+        PropertyServiceScheduler.setLatencyGlobal(noop, 500.0);
+        PropertyServiceScheduler.setInstances(noop, 1000);
 
         // Set up function durations
         MappingsConcurrent mappings = specification.getMappings();
-        mappings.mappingStream().forEach((map) -> PropertyServiceTiming.setDuration(map, 2000.0));
+        mappings.mappingStream().forEach((map) -> PropertyServiceScheduler.setDuration(map, 2000.0));
 
         return specification;
     }

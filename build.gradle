@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.github.Apollo-Core:EE-Visualization:v1.0.0'
     implementation 'com.github.Apollo-Core:SC-Core:v1.0.0'
     implementation 'com.github.Apollo-core:EE-Docker:v1.0.0'
-    implementation 'com.github.Apollo-Decentralized-Orchestration:DO-Incision:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Decentralized-Orchestration:DO-Incision:522fddb979'
   }
 
   // dependency to Opt4J

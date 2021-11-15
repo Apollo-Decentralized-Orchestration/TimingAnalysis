@@ -1,5 +1,6 @@
 package at.uibk.dps.ta.tmp;
 
+import at.uibk.dps.di.properties.PropertyServiceScheduler;
 import com.google.gson.JsonPrimitive;
 import at.uibk.dps.ee.io.resources.ResourceGraphProviderFile;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
@@ -11,7 +12,6 @@ import at.uibk.dps.ee.model.properties.PropertyServiceDependency;
 import at.uibk.dps.ee.model.properties.PropertyServiceFunctionUser;
 import at.uibk.dps.ee.model.properties.PropertyServiceMapping;
 import at.uibk.dps.ee.model.properties.PropertyServiceMapping.EnactmentMode;
-import at.uibk.dps.ta.properties.PropertyServiceTiming;
 import net.sf.opendse.model.Communication;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
@@ -53,8 +53,8 @@ public final class Graphs {
     boolean isCloudRes = res.getId().equals(cloudResourceName);
     double latLoc = isCloudRes ? tLatCloLoc : tLatLocLoc;
     double latGlob = isCloudRes ? tLatCloGlo : tLatLocGlo;
-    PropertyServiceTiming.setLatencyGlobal(res, latGlob);
-    PropertyServiceTiming.setLatencyLocal(res, latLoc);
+    PropertyServiceScheduler.setLatencyGlobal(res, latGlob);
+    PropertyServiceScheduler.setLatencyLocal(res, latLoc);
   }
 
   static Mapping<Task, Resource> makeMapping(Task task, Resource res, double durCloud,
@@ -63,7 +63,7 @@ public final class Graphs {
     EnactmentMode eMode = isCloudRes ? EnactmentMode.Serverless : EnactmentMode.Local;
     Mapping<Task, Resource> result = PropertyServiceMapping.createMapping(task, res, eMode, "bla");
     double mappingDuration = isCloudRes ? durCloud : durLoc;
-    PropertyServiceTiming.setDuration(result, mappingDuration);
+    PropertyServiceScheduler.setDuration(result, mappingDuration);
     return result;
   }
 
