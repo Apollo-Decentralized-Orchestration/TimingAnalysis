@@ -21,8 +21,6 @@ public class SpecificationProviderTest implements SpecificationProvider {
 
   protected final EnactmentSpecification eSpec;
 
-
-
   @Inject
   public SpecificationProviderTest(
       @Constant(namespace = SpecificationProviderTest.class, value = "durCloud") double durCloud,
@@ -34,14 +32,18 @@ public class SpecificationProviderTest implements SpecificationProvider {
       @Constant(namespace = SpecificationProviderTest.class,
           value = "transCloudLocal") double latCloLoc,
       @Constant(namespace = SpecificationProviderTest.class,
-          value = "transCloudGlobal") double latCloGlo) {
-    this.eSpec = generateSpec(durCloud, durLoc, latLocLoc, latLocGlo, latCloLoc, latCloGlo);
+          value = "transCloudGlobal") double latCloGlo,
+      @Constant(namespace = SpecificationProviderTest.class,
+          value = "numInstancesLocal") int numInstancesLocal,
+      @Constant(namespace = SpecificationProviderTest.class,
+          value = "numInstancesCloud") int numInstancesCloud) {
+    this.eSpec = generateSpec(durCloud, durLoc, latLocLoc, latLocGlo, latCloLoc, latCloGlo, numInstancesLocal, numInstancesCloud);
   }
 
   protected EnactmentSpecification generateSpec(double durCloud, double durLoc, double latLocLoc,
-      double latLocGlo, double latCloLoc, double latCloGlo) {
+      double latLocGlo, double latCloLoc, double latCloGlo, int numInstancesLocal, int numInstancesCloud) {
     EnactmentGraph eGraph = Graphs.getEGraph();
-    ResourceGraph rGraph = Graphs.getRGraph(latLocLoc, latLocGlo, latCloLoc, latCloGlo);
+    ResourceGraph rGraph = Graphs.getRGraph(latLocLoc, latLocGlo, latCloLoc, latCloGlo, numInstancesLocal, numInstancesCloud);
     MappingsConcurrent mappings = Graphs.getMappings(eGraph, rGraph, durCloud, durLoc);
     return new EnactmentSpecification(eGraph, rGraph, mappings, "test");
   }

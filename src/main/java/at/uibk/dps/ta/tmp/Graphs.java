@@ -32,10 +32,10 @@ public final class Graphs {
       "https://fkwvdybi0a.execute-api.us-east-1.amazonaws.com/default/functino_noop_pub";
 
   public static ResourceGraph getRGraph(double tLatLocLoc, double tLatLocGlo, double tLatCloLoc,
-      double tLatCloGlo) {
+      double tLatCloGlo, int tInstLoc, int tInstClo) {
     final ResourceGraphProvider rGraphProv = new ResourceGraphProviderFile(mappingsPath);
     ResourceGraph result = rGraphProv.getResourceGraph();
-    result.forEach(res -> annotateResource(res, tLatLocLoc, tLatLocGlo, tLatCloLoc, tLatCloGlo));
+    result.forEach(res -> annotateResource(res, tLatLocLoc, tLatLocGlo, tLatCloLoc, tLatCloGlo, tInstLoc, tInstClo));
     return result;
   }
 
@@ -49,12 +49,14 @@ public final class Graphs {
   }
 
   static void annotateResource(Resource res, double tLatLocLoc, double tLatLocGlo,
-      double tLatCloLoc, double tLatCloGlo) {
+      double tLatCloLoc, double tLatCloGlo, int tInstLoc, int tInstClo) {
     boolean isCloudRes = res.getId().equals(cloudResourceName);
     double latLoc = isCloudRes ? tLatCloLoc : tLatLocLoc;
     double latGlob = isCloudRes ? tLatCloGlo : tLatLocGlo;
+    int instances = isCloudRes ? tInstClo : tInstLoc;
     PropertyServiceScheduler.setLatencyGlobal(res, latGlob);
     PropertyServiceScheduler.setLatencyLocal(res, latLoc);
+    PropertyServiceScheduler.setInstances(res, instances);
   }
 
   static Mapping<Task, Resource> makeMapping(Task task, Resource res, double durCloud,

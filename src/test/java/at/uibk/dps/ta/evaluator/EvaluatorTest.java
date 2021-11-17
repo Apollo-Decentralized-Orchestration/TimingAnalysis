@@ -56,7 +56,7 @@ public class EvaluatorTest {
      *
      * @return the generated specification.dd
      */
-    private EnactmentSpecification setupSpecification(EnactmentGraph eGraph) {
+    /*private EnactmentSpecification setupSpecification(EnactmentGraph eGraph) {
 
         // Generate the specification
         final EnactmentGraphProvider eGraphProvider = () -> eGraph;
@@ -264,5 +264,5 @@ public class EvaluatorTest {
         double duration = evaluator.evaluate(specification, cuts);
 
         assertEquals(18500.0, duration);
-    }
+    }*/
 }

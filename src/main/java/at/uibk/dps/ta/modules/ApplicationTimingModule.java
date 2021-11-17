@@ -47,6 +47,15 @@ public class ApplicationTimingModule extends ProblemModule {
   @Constant(namespace = SpecificationProviderTest.class, value = "transCloudGlobal")
   public double transCloudGlobal = 500;
 
+  @Info("Number of available instances on local resource")
+  @Order(8)
+  @Constant(namespace = SpecificationProviderTest.class, value = "numInstancesLocal")
+  public int numInstancesLocal = 1;
+
+  @Info("Number of available instances on cloud resource")
+  @Order(9)
+  @Constant(namespace = SpecificationProviderTest.class, value = "numInstancesCloud")
+  public int numInstancesCloud = 1000;
 
   @Override
   protected void config() {
@@ -111,5 +120,19 @@ public class ApplicationTimingModule extends ProblemModule {
     this.transCloudGlobal = transCloudGlobal;
   }
 
+  public int getNumInstancesLocal() {
+    return numInstancesLocal;
+  }
 
+  public void setNumInstancesLocal(int numInstancesLocal) {
+    this.numInstancesLocal = numInstancesLocal;
+  }
+
+  public int getNumInstancesCloud() {
+    return numInstancesCloud;
+  }
+
+  public void setNumInstancesCloud(int numInstancesCloud) {
+    this.numInstancesCloud = numInstancesCloud;
+  }
 }

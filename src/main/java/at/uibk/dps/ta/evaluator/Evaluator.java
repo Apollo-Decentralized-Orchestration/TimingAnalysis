@@ -127,11 +127,8 @@ public class Evaluator {
         }
 
         Set<Double> resourceDurations = mapResource.values().stream()
-            .map(
-            at.uibk.dps.di.scheduler.Resource::maxDuration)
-            .collect(
-                Collectors.toSet()
-            );
+            .map(at.uibk.dps.di.scheduler.Resource::maxDuration)
+            .collect(Collectors.toSet());
 
         return resourceDurations.isEmpty() ? 0.0 : Collections.max(resourceDurations);
     }
