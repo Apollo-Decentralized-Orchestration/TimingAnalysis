@@ -13,6 +13,8 @@ jacoco {
   toolVersion = "0.8.5"
 }
 
+mainClassName = 'org.opt4j.core.start.Opt4J'
+
 group 'Timing-Analysis'
 version '1.0-SNAPSHOT'
 
