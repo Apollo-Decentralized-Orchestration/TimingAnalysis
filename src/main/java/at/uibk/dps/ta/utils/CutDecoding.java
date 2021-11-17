@@ -3,6 +3,7 @@ package at.uibk.dps.ta.utils;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ta.properties.PsGraphCut;
@@ -32,7 +33,7 @@ public class CutDecoding {
    */
   public static Set<Cut> decodeCuts(final EnactmentGraph eGraph, int maxCutNumber) {
     Set<Cut> result = new HashSet<>();
-    for (int cutIdx = 1; cutIdx < maxCutNumber; cutIdx++) {
+    for (int cutIdx = 0; cutIdx < maxCutNumber; cutIdx++) {
       result.add(findCutForIdx(eGraph, cutIdx));
     }
     return result;
