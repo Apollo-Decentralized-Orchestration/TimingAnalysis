@@ -20,12 +20,12 @@ public class ApplicationTimingModule extends ProblemModule {
   @Info("Duration of tasks on the cloud")
   @Order(2)
   @Constant(namespace = SpecificationProviderTest.class, value = "durCloud")
-  public double durCloud = 1000;
+  public double durCloud = 2000;
 
   @Info("Duration of tasks on the local resource")
   @Order(3)
   @Constant(namespace = SpecificationProviderTest.class, value = "durLocal")
-  public double durLocal = 1100;
+  public double durLocal = 2000;
 
   @Info("Transmission time between local tasks")
   @Order(4)

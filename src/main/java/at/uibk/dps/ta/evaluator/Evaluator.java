@@ -3,9 +3,9 @@ package at.uibk.dps.ta.evaluator;
 import at.uibk.dps.di.properties.PropertyServiceScheduler;
 import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.di.scheduler.Scheduler;
-import at.uibk.dps.ee.model.graph.EnactmentGraph;
-import at.uibk.dps.ee.model.graph.EnactmentSpecification;
-import at.uibk.dps.ee.model.graph.MappingsConcurrent;
+import at.uibk.dps.ee.model.graph.*;
+import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
+import at.uibk.dps.ta.tmp.SpecificationProviderTest;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
@@ -131,5 +131,21 @@ public class Evaluator {
             .collect(Collectors.toSet());
 
         return resourceDurations.isEmpty() ? 0.0 : Collections.max(resourceDurations);
+    }
+
+    public static void main(String[] args) {
+        SpecificationProviderTest specificationProviderTest = new SpecificationProviderTest(
+            2000,2000,0,0,200,500,1,1000
+        );
+        final EnactmentSpecification specification = specificationProviderTest.generateSpec(
+            2000,2000,0,0,200,500,1,1000
+        );
+
+        List<Cut> cuts = new Scheduler().schedule(specification);
+
+        EnactmentGraphViewer.view(specification.getEnactmentGraph());
+
+        Evaluator e = new Evaluator();
+        System.out.println(e.evaluate(specification, cuts));
     }
 }

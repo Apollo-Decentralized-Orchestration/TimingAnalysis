@@ -40,7 +40,7 @@ public class SpecificationProviderTest implements SpecificationProvider {
     this.eSpec = generateSpec(durCloud, durLoc, latLocLoc, latLocGlo, latCloLoc, latCloGlo, numInstancesLocal, numInstancesCloud);
   }
 
-  protected EnactmentSpecification generateSpec(double durCloud, double durLoc, double latLocLoc,
+  public EnactmentSpecification generateSpec(double durCloud, double durLoc, double latLocLoc,
       double latLocGlo, double latCloLoc, double latCloGlo, int numInstancesLocal, int numInstancesCloud) {
     EnactmentGraph eGraph = Graphs.getEGraph();
     ResourceGraph rGraph = Graphs.getRGraph(latLocLoc, latLocGlo, latCloLoc, latCloGlo, numInstancesLocal, numInstancesCloud);
