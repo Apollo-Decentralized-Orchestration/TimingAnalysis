@@ -56,7 +56,7 @@ public final class Graphs {
   static Mapping<Task, Resource> makeMapping(Task task, Resource res, double durCloud,
       double durLoc) {
     boolean isCloudRes = res.getId().equals(cloudResourceName);
-    EnactmentMode eMode = isCloudRes ? EnactmentMode.Serverless : EnactmentMode.Local;
+    EnactmentMode eMode = isCloudRes ? EnactmentMode.Serverless : EnactmentMode.Demo;
     Mapping<Task, Resource> result = PropertyServiceMapping.createMapping(task, res, eMode, isCloudRes ? cloudResourceName : localResourceName);
     double mappingDuration = isCloudRes ? durCloud : durLoc;
     PropertyServiceScheduler.setDuration(result, mappingDuration);
