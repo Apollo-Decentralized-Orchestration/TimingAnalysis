@@ -6,16 +6,13 @@ import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.di.scheduler.Scheduler;
 import at.uibk.dps.ee.deploy.run.ImplementationRunBare;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
-import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
 import at.uibk.dps.ta.modules.ApplicationTimingModule;
-import at.uibk.dps.ta.tmp.Graphs;
 import com.google.gson.JsonObject;
 import org.opt4j.core.Individual;
 import org.opt4j.core.optimizer.Archive;
 import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Opt4JTask;
 import org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule;
-import org.opt4j.viewer.ViewerModule;
 import java.util.List;
 
 public class Runner {
@@ -26,10 +23,6 @@ public class Runner {
         EvolutionaryAlgorithmModule ea = new EvolutionaryAlgorithmModule();
         ea.setGenerations(1000);
         ea.setPopulationSize(100);
-
-        // Setup viewer
-        ViewerModule viewer = new ViewerModule();
-        viewer.setCloseOnStop(true);
 
         // Create Opt4J task
         Opt4JTask task = new Opt4JTask(false);
@@ -62,8 +55,6 @@ public class Runner {
         // Run the EA and generate the enactment specification
         EnactmentSpecification spec = new Runner().runEA(new ApplicationTimingModule());
 
-        EnactmentGraphViewer.view(Graphs.getEGraph());
-
         // Extract the cuts generated from the EA
         Scheduler scheduler = new Scheduler();
         scheduler.setResources(spec);
@@ -76,7 +67,7 @@ public class Runner {
         String specificationAdapted = Utility.fromEnactmentSpecificationToString(spec);
 
         // Run the workflow
-        return new ImplementationRunBare().implement("{'input': 2}", specificationAdapted, Utility.DE_CONFIGURATION);
+        return new ImplementationRunBare().implement("{'input': 1}", specificationAdapted, Utility.DE_CONFIGURATION);
     }
 
     public static void main(String[] args) {
