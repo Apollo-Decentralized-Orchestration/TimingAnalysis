@@ -1,6 +1,6 @@
 [
   {
-    "functionType": "noop",
+    "functionType": "Increment",
     "resources": [
       {
         "type": "Serverless",
