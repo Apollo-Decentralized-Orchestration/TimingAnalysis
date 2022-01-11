@@ -69,7 +69,7 @@ public class eGraphs {
         PropertyServiceDependency.addDataDependency(task4, comm6, "incrementNumber", graph);
         PropertyServiceDependency.addDataDependency(task5, comm7, "incrementNumber", graph);
         PropertyServiceDependency.addDataDependency(comm6, task6, "numberToIncrement", graph);
-        PropertyServiceDependency.addDataDependency(comm7, task6, "numberToIncrement", graph);
+        PropertyServiceDependency.addDataDependency(comm7, task6, "numberToIncrement2", graph);
         PropertyServiceDependency.addDataDependency(task6, comm8, "incrementNumber", graph);
         PropertyServiceData.makeRoot(comm1);
         PropertyServiceData.makeLeaf(comm8);

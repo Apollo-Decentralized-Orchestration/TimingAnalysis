@@ -53,7 +53,7 @@ public class Runner {
     private JsonObject run(ProblemModule module) {
 
         // Run the EA and generate the enactment specification
-        EnactmentSpecification spec = new Runner().runEA(new ApplicationTimingModule());
+        EnactmentSpecification spec = new Runner().runEA(module);
 
         // Extract the cuts generated from the EA
         Scheduler scheduler = new Scheduler();
