@@ -1,0 +1,13 @@
+[
+  {
+    "functionType": "ee",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://1m3c0y7o0d.execute-api.us-east-1.amazonaws.com/default/enactment-engine"
+        }
+      }
+    ]
+  }
+]

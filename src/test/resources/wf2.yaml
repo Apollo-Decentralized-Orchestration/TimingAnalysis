@@ -1,0 +1,33 @@
+---
+name: "longSeq"
+dataIns:
+  - name: "input"
+    type: "string"
+    source: "input"
+  - name: "configuration"
+    type: "string"
+    source: "configuration"
+  - name: "specification"
+    type: "string"
+    source: "specification"
+workflowBody:
+  - function:
+      name: "ee"
+      type: "ee"
+      dataIns:
+        - name: "input"
+          type: "string"
+          source: "longSeq/input"
+        - name: "configuration"
+          type: "string"
+          source: "longSeq/configuration"
+        - name: "specification"
+          type: "string"
+          source: "longSeq/specification"
+      dataOuts:
+        - name: "output"
+          type: "string"
+dataOuts:
+  - name: "output"
+    type: "string"
+    source: "ee/output"
