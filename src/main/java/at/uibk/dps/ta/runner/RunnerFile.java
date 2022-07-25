@@ -15,7 +15,7 @@ import io.netty.util.internal.StringUtil;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -62,7 +62,7 @@ public class RunnerFile {
         String specificationAdapted = Utility.fromEnactmentSpecificationToString(specification);
 
         // Run the workflow
-        new ImplementationRunBare().implement(input, specificationAdapted, Utility.DE_CONFIGURATION);
+        //new ImplementationRunBare().implement(input, specificationAdapted, Utility.DE_CONFIGURATION);
     }
 
     private void run2(String afclPath, String mappingsPath, String input) {
@@ -77,7 +77,7 @@ public class RunnerFile {
                 Utility.fromEnactmentSpecificationToString(setupSpecification("src/test/resources/wf1.yaml", "src/test/resources/wf1.json")) + "'}";
 
         // Run the workflow
-        new ImplementationRunBare().implement(in, specificationAdapted, Utility.DE_CONFIGURATION);
+        //new ImplementationRunBare().implement(in, specificationAdapted, Utility.DE_CONFIGURATION);
     }
 
     public static void main(String[] args) {

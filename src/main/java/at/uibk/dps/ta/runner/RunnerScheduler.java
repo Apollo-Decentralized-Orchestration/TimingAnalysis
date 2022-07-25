@@ -6,11 +6,16 @@ import at.uibk.dps.di.properties.PropertyServiceScheduler;
 import at.uibk.dps.di.scheduler.Cut;
 import at.uibk.dps.di.scheduler.Scheduler;
 import at.uibk.dps.ee.deploy.run.ImplementationRunBare;
+import at.uibk.dps.ee.guice.EeCoreInjectable;
+import at.uibk.dps.ee.guice.starter.EeConfiguration;
 import at.uibk.dps.ee.io.resources.ResourceGraphProviderFile;
 import at.uibk.dps.ee.io.spec.SpecificationProviderFile;
 import at.uibk.dps.ee.model.graph.*;
 import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
 import at.uibk.dps.ta.tmp.eGraphs;
+import com.google.gson.JsonObject;
+import com.google.inject.Guice;
+import io.vertx.core.Vertx;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
@@ -90,13 +95,15 @@ public class RunnerScheduler {
         // Get the adapted specification as string
         String specificationAdapted = Utility.fromEnactmentSpecificationToString(specification);
 
-        // Run the workflow
-        new ImplementationRunBare().implement("{'input': 1}", specificationAdapted, Utility.DE_CONFIGURATION);
-    }
+        // View workflow
+        //EnactmentGraphViewer.view(specification.getEnactmentGraph());
 
+        // Run the workflow
+        //EeConfiguration.main(new String[] {"/home/stefan/git/orgs/apollo-do/TimingAnalysis/src/test/resources/wf1/config.xml"});
+        new ImplementationRunBare(Vertx.vertx()).implement("{'input': 2}", specificationAdapted, Utility.CONFIGURATION);
+    }
 
     public static void main(String[] args) {
         new RunnerScheduler().run();
     }
-
 }

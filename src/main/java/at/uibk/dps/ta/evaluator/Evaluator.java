@@ -79,7 +79,7 @@ public class Evaluator {
     public double evaluate(final EnactmentSpecification specification, final List<Cut> cuts) {
 
         // Use scheduler functionality
-        Scheduler scheduler = new Scheduler();
+        /*Scheduler scheduler = new Scheduler();
 
         // Get the enactment graph
         EnactmentGraph eGraph = specification.getEnactmentGraph();
@@ -130,7 +130,8 @@ public class Evaluator {
             .map(at.uibk.dps.di.scheduler.Resource::maxDuration)
             .collect(Collectors.toSet());
 
-        return resourceDurations.isEmpty() ? 0.0 : Collections.max(resourceDurations);
+        return resourceDurations.isEmpty() ? 0.0 : Collections.max(resourceDurations);*/
+        return 1.1;
     }
 
     public static void main(String[] args) {

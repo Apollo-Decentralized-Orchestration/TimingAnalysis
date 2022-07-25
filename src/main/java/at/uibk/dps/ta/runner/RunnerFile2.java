@@ -11,6 +11,7 @@ import at.uibk.dps.ee.io.spec.SpecificationProviderFile;
 import at.uibk.dps.ee.model.graph.*;
 import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
 import at.uibk.dps.ta.tmp.eGraphs;
+import io.vertx.core.Vertx;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
@@ -91,7 +92,7 @@ public class RunnerFile2 {
         String specificationAdapted = Utility.fromEnactmentSpecificationToString(specification);
 
         // Run the workflow
-        new ImplementationRunBare().implement("{'input': 1}", specificationAdapted, Utility.DE_CONFIGURATION);
+        new ImplementationRunBare(Vertx.vertx()).implement("{'input': 1}", specificationAdapted, Utility.DE_CONFIGURATION);
     }
 
     public static void main(String[] args) {

@@ -50,7 +50,7 @@ public class Runner {
         throw new IllegalStateException("Unexpected error while running EA");
     }
 
-    private JsonObject run(ProblemModule module) {
+    /*private JsonObject run(ProblemModule module) {
 
         // Run the EA and generate the enactment specification
         EnactmentSpecification spec = new Runner().runEA(module);
@@ -72,5 +72,5 @@ public class Runner {
 
     public static void main(String[] args) {
         new Runner().run(new ApplicationTimingModule());
-    }
+    }*/
 }

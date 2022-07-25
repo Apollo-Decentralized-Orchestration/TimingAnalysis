@@ -1,5 +1,8 @@
 buildscript {
   repositories {
+    maven {
+      url "https://maven.google.com"
+    }
     jcenter()
   }
 }
@@ -28,22 +31,35 @@ repositories {
 dependencies {
 
   if (project.hasProperty("local")) {
+    implementation project (':EE-Core')
+    implementation project (':EE-Guice')
     implementation project (':EE-Model')
+    implementation project (':EE-IO')
+    implementation project (':EE-Enactables')
+    implementation project (':SC-Core')
+    implementation project (':EE-Control')
+    implementation project (':EE-Visualization')
+    implementation project (':EE-Docker')
   }else {
     // dependencies to other parts of the Apollo Core EE
-    implementation 'com.github.Apollo-Core:EE-Model:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-Deploy:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-IO:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-Core:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-Guice:v1.0.0'
-    //implementation 'com.github.Apollo-Core:EE-Enactables:v1.0.0'
-    implementation 'com.github.stefanpedratscher:EE-Enactables:6479007683'
-    implementation 'com.github.Apollo-Core:EE-Control:v1.0.0'
-    implementation 'com.github.Apollo-Core:EE-Visualization:v1.0.0'
-    implementation 'com.github.Apollo-Core:SC-Core:v1.0.0'
-    implementation 'com.github.Apollo-core:EE-Docker:v1.0.0'
-    implementation 'com.github.Apollo-Decentralized-Orchestration:DO-Incision:d206b5d2f2'
+    implementation 'com.github.Apollo-Core:EE-Core:-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Visualization:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Docker:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Deploy:-SNAPSHOT'
+
+    //implementation 'com.github.Apollo-Decentralized-Orchestration:DO-Incision:d206b5d2f2'
+    implementation project (':EE-DO')
   }
+
+  // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
 
   // dependency to Opt4J
   implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
