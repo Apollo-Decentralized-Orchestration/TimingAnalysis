@@ -1,6 +1,6 @@
 [
   {
-    "functionType": "Increment",
+    "functionType": "noop",
     "resources": [
       {
         "type": "Serverless",
@@ -11,7 +11,7 @@
       {
         "type": "Local",
         "properties": {
-          "Image": "stefan/noop"
+          "Image": "csat2065/noop"
         }
       }
     ]

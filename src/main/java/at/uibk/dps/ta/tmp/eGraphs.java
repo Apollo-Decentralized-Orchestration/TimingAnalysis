@@ -50,12 +50,12 @@ public class eGraphs {
         final Task comm6 = new Communication("commNode6");
         final Task comm7 = new Communication("commNode7");
         final Task comm8 = new Communication("commNode8");
-        final Task task1 = PropertyServiceFunctionUser.createUserTask("taskNode1", "Increment");
-        final Task task2 = PropertyServiceFunctionUser.createUserTask("taskNode2", "Increment");
-        final Task task3 = PropertyServiceFunctionUser.createUserTask("taskNode3", "Increment");
-        final Task task4 = PropertyServiceFunctionUser.createUserTask("taskNode4", "Increment");
-        final Task task5 = PropertyServiceFunctionUser.createUserTask("taskNode5", "Increment");
-        final Task task6 = PropertyServiceFunctionUser.createUserTask("taskNode6", "Increment");
+        final Task task1 = PropertyServiceFunctionUser.createUserTask("taskNode1", "noop");
+        final Task task2 = PropertyServiceFunctionUser.createUserTask("taskNode2", "noop");
+        final Task task3 = PropertyServiceFunctionUser.createUserTask("taskNode3", "noop");
+        final Task task4 = PropertyServiceFunctionUser.createUserTask("taskNode4", "noop");
+        final Task task5 = PropertyServiceFunctionUser.createUserTask("taskNode5", "noop");
+        final Task task6 = PropertyServiceFunctionUser.createUserTask("taskNode6", "noop");
         EnactmentGraph graph = new EnactmentGraph();
         PropertyServiceDependency.addDataDependency(comm1, task1, "numberToIncrement", graph);
         PropertyServiceDependency.addDataDependency(task1, comm2, "incrementNumber", graph);
@@ -76,6 +76,39 @@ public class eGraphs {
         PropertyServiceData.setJsonKey(comm1, "input");
         PropertyServiceData.setJsonKey(comm8, "incrementNumber");
         return graph;
+    }
+
+    public static EnactmentGraph getEnactmentGraphParallel(int seqPerBranch, int parallelBranches){
+
+        int numberTasksNodes = seqPerBranch * parallelBranches + 2;
+        int numberCommNodes = numberTasksNodes + parallelBranches;
+
+        final List<Task> communicationNodes = new ArrayList<>();
+        IntStream.rangeClosed(1, numberCommNodes).forEach((i) -> communicationNodes.add(new Communication("commNode" + i)));
+
+        final List<Task> taskNodes = new ArrayList<>();
+        IntStream.rangeClosed(1, numberTasksNodes).forEach((i) -> {  final Task task = PropertyServiceFunctionUser.createUserTask("taskNode" + i, "noop"); task.setAttribute("Duration", 2000.0); taskNodes.add(task); });
+
+        EnactmentGraph graph = new EnactmentGraph();
+        PropertyServiceData.setContent(communicationNodes.get(0), new JsonPrimitive(true));
+        PropertyServiceData.makeRoot(communicationNodes.get(0));
+        PropertyServiceDependency.addDataDependency(communicationNodes.get(0), taskNodes.get(0),"key", graph);
+        PropertyServiceDependency.addDataDependency(taskNodes.get(0), communicationNodes.get(1), "key", graph);
+
+        for(int i = 1; i <= parallelBranches; i++) {
+            PropertyServiceDependency.addDataDependency(taskNodes.get(0), communicationNodes.get(i), "key", graph);
+            int j;
+            for(j = i; j <= seqPerBranch * parallelBranches; j = j + parallelBranches) {
+                PropertyServiceDependency.addDataDependency(communicationNodes.get(j), taskNodes.get(j), "key", graph);
+                PropertyServiceDependency.addDataDependency(taskNodes.get(j), communicationNodes.get(j + parallelBranches),"key", graph);
+            }
+            PropertyServiceDependency.addDataDependency(communicationNodes.get(j), taskNodes.get(numberTasksNodes - 1), "key", graph);
+        }
+
+        PropertyServiceDependency.addDataDependency(taskNodes.get(numberTasksNodes - 1), communicationNodes.get(numberCommNodes - 1),"key", graph);
+        PropertyServiceData.makeLeaf(communicationNodes.get(numberCommNodes - 1));
+        return graph;
+
     }
 
     /**

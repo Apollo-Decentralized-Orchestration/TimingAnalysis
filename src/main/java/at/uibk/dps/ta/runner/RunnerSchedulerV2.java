@@ -1,33 +1,24 @@
 package at.uibk.dps.ta.runner;
 
-import at.uibk.dps.di.incision.Incision;
-import at.uibk.dps.di.incision.Utility;
 import at.uibk.dps.di.properties.PropertyServiceScheduler;
-import at.uibk.dps.di.scheduler.Cut;
-import at.uibk.dps.di.scheduler.Scheduler;
-import at.uibk.dps.ee.deploy.run.ImplementationRunBare;
-import at.uibk.dps.ee.guice.EeCoreInjectable;
-import at.uibk.dps.ee.guice.starter.EeConfiguration;
+import at.uibk.dps.di.schedulerV2.LatencyMapping;
+import at.uibk.dps.di.schedulerV2.Scheduler;
 import at.uibk.dps.ee.io.resources.ResourceGraphProviderFile;
 import at.uibk.dps.ee.io.spec.SpecificationProviderFile;
 import at.uibk.dps.ee.model.graph.*;
 import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
 import at.uibk.dps.ta.tmp.eGraphs;
-import com.google.gson.JsonObject;
-import com.google.inject.Guice;
-import io.vertx.core.Vertx;
-import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
-import net.sf.opendse.model.Task;
-import org.w3c.dom.ls.LSOutput;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RunnerScheduler {
+
+public class RunnerSchedulerV2 {
 
     private final String localResourceName = "Enactment Engine (Local Machine)";
     private final String cloudResourceName = "https://fkwvdybi0a.execute-api.us-east-1.amazonaws.com/default/functino_noop_pub";
-
+    List<LatencyMapping> latencyMappings = new ArrayList<>();
     private EnactmentSpecification setupSpecification(EnactmentGraph eGraph, String mappingsPath) {
 
         // Generate the specification
@@ -43,8 +34,12 @@ public class RunnerScheduler {
         PropertyServiceScheduler.setInstances(local, 1);
         Resource noop = specification.getResourceGraph().getVertex(cloudResourceName);
         PropertyServiceScheduler.setLatencyLocal(noop, 200.0);
-        PropertyServiceScheduler.setLatencyGlobal(noop, 500.0);
+        PropertyServiceScheduler.setLatencyGlobal(noop, 200.0);
         PropertyServiceScheduler.setInstances(noop, 1000);
+
+        latencyMappings.add(new LatencyMapping(localResourceName, "https://fkwvdybi0a.execute-api.us-east-1.amazonaws.com/default/functino_noop_pub", 500.0));
+        latencyMappings.add(new LatencyMapping("https://fkwvdybi0a.execute-api.us-east-1.amazonaws.com/default/functino_noop_pub", "https://fkwvdybi0a.execute-api.us-east-1.amazonaws.com/default/functino_noop_pub", 200.0));
+        latencyMappings.add(new LatencyMapping(localResourceName, localResourceName, 0.0));
 
         // Set up function durations
         MappingsConcurrent mappings = specification.getMappings();
@@ -55,13 +50,17 @@ public class RunnerScheduler {
 
     private void run() {
 
-        // Get the eGraph and specification (including function durations, task mappings, latencies)
-        EnactmentSpecification specification = setupSpecification(eGraphs.getMediumSizedEnactmentGraph(), "src/test/resources/mapping.json");
+        // Get the eGraph and specification (including function durations, task mappings, latencies)EnactmentSpecification s = setupSpecification(eGraphs.getMediumSizedEnactmentGraph(), "src/test/resources/mapping.json");
+        //EnactmentSpecification specification = setupSpecification(eGraphs.getMediumSizedEnactmentGraph(), "src/test/resources/mapping.json");
+
+        EnactmentSpecification specification = setupSpecification(eGraphs.getEnactmentGraphParallel(6,3), "src/test/resources/mapping_simple.json");
 
         // --> Scheduling
 
             // This is the adapted HEFT scheduler
-            List<Cut> cuts = new Scheduler().schedule(specification);
+            new Scheduler(latencyMappings).schedule(specification);
+
+            // TODO check why it is not in parallel Local-Cloud, then Cloud-Local, then Local-Cloud, then Cloud-Local, ...
 
             // After scheduling two things should be done:
             /*
@@ -92,24 +91,9 @@ public class RunnerScheduler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        // Cut the workflow at the given position
-        for(Cut cut: cuts) {
-            new Incision().cut(specification, cut.getTopCut(), cut.getBottomCut());
-        }
-
-        // Get the adapted specification as string
-        String specificationAdapted = Utility.fromEnactmentSpecificationToString(specification);
-
-        // View workflow
-        //EnactmentGraphViewer.view(specification.getEnactmentGraph());
-
-        // Run the workflow
-        //EeConfiguration.main(new String[] {"/home/stefan/git/orgs/apollo-do/TimingAnalysis/src/test/resources/wf1/config.xml"});
-        new ImplementationRunBare(Vertx.vertx()).implement("{'input': 2}", specificationAdapted, Utility.DE_CONFIGURATION);
     }
 
     public static void main(String[] args) {
-        new RunnerScheduler().run();
+        new RunnerSchedulerV2().run();
     }
 }

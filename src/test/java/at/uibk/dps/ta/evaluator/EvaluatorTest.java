@@ -60,7 +60,7 @@ public class EvaluatorTest {
 
         // Generate the specification
         final EnactmentGraphProvider eGraphProvider = () -> eGraph;
-        String mappingsPath = Objects.requireNonNull(getClass().getClassLoader().getResource("mapping.json")).getPath();
+        String mappingsPath = Objects.requireNonNull(getClass().getClassLoader().getResource("mapping_soykb.json")).getPath();
         final ResourceGraphProvider rGraphProv = new ResourceGraphProviderFile(mappingsPath);
         final SpecificationProviderFile specProv = new SpecificationProviderFile(eGraphProvider, rGraphProv, mappingsPath);
         final EnactmentSpecification specification = specProv.getSpecification();

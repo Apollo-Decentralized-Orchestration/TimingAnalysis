@@ -18,7 +18,7 @@ public class PropertyServiceTimingTest {
 
     double duration = 12;
     PropertyServiceTiming.setDuration(mapping, duration);
-    assertEquals(PropertyServiceTiming.getDuration(mapping), duration);
+    assertEquals(PropertyServiceTiming.getAvgDurationOnAllResources(mapping), duration);
   }
 
   @Test

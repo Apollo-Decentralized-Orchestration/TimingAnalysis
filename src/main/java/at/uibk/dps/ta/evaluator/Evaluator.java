@@ -117,7 +117,7 @@ public class Evaluator {
 
                 // Set that the resource is used now
                 double finishTime = mapResource.get(map.getTarget().getId()).setResource(earliestStartTime, PropertyServiceScheduler
-                    .getDuration(map), prevOnSameResource);
+                    .getAvgDurationOnAllResources(map), prevOnSameResource);
 
                 // Set the finish time of the task and its resource type
                 mapFinishTime.put(rankedTask, finishTime);

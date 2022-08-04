@@ -1,0 +1,240 @@
+[
+  {
+    "functionType": "soykb_alignment_to_reference",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://nvpl2u7eejdrscdll55nvomp3a0qumpv.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_alignment_to_reference"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_sort_sam",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://abzuwbac2m7wzlgpm6zfrnj5c40hexln.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_sort_sam"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_dedup",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://xektuf6xq7mlscz3ddcxlmhf2y0szkes.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_dedup"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_add_replace",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://kbqlngc543plsvzrvjtjuqt3aq0mirwu.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_add_replace"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_realign_target_creator",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://ezbibug3jxjej53rtc4v7hybca0wfqui.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_realign_target_creator"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_indel_realign",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://p5fc3q4iczkxolkwl6zkwloy3q0ncrbs.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_indel_realign"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_haplotype_caller",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://io3e6ekvvhy4cum7t2qiaip2eu0mnxxy.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_haplotype_caller"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_genotype_gvcfs",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://iytgcfvg6yomsrzvn7jhud57j40adryk.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_genotype_gvcfs"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_combine_variants",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://pqzui26yyjprgn3fmbego4d7wy0vrciw.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_combine_variants"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_merge_gvcfs",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://uz2ukwa2hcko3xxvisfxcs7lke0vgtci.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_merge_gvcfs"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_select_variants_indel",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://kg4jhyqz2ta6r5lmrwuumyatfi0mvenc.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_select_variants_indel"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_filter_variants_indel",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://hmx2mia3vamexdlv5bshhjtqha0lmpcj.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_filter_variants_indel"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_select_variants_snp",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://l7o363noduuirrq4dbv5elfh4q0mdbrq.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_select_variants_snp"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "soykb_filter_variants_snp",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "https://34wj2qkwxkmuxjmn3j6hm5fil40giysj.lambda-url.us-east-1.on.aws/"
+        }
+      },
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "csat2065/soykb_filter_variants_snp"
+        }
+      }
+    ]
+  }
+]
