@@ -263,4 +263,65 @@ public class eGraphs {
         PropertyServiceData.makeLeaf(comm8);
         return graph;
     }
+
+    public static EnactmentGraph getJITWF() {
+        final Task comm1 = new Communication("commNode1");
+        final Task comm2 = new Communication("commNode2");
+        final Task comm3 = new Communication("commNode3");
+        final Task comm4 = new Communication("commNode4");
+        final Task comm5 = new Communication("commNode5");
+        final Task comm6 = new Communication("commNode6");
+        final Task comm7 = new Communication("commNode7");
+        final Task comm8 = new Communication("commNode8");
+        final Task comm9 = new Communication("commNode9");
+        final Task comm10 = new Communication("commNode10");
+        final Task comm11 = new Communication("commNode11");
+        final Task task1 = PropertyServiceFunctionUser.createUserTask("taskNode1", "noop");
+        final Task task2 = PropertyServiceFunctionUser.createUserTask("taskNode2", "noop");
+        final Task task3 = PropertyServiceFunctionUser.createUserTask("taskNode3", "noop");
+        final Task task4 = PropertyServiceFunctionUser.createUserTask("taskNode4", "noop");
+        final Task task5 = PropertyServiceFunctionUser.createUserTask("taskNode5", "noop");
+        final Task task6 = PropertyServiceFunctionUser.createUserTask("taskNode6", "noop");
+        final Task task7 = PropertyServiceFunctionUser.createUserTask("taskNode7", "noop");
+        final Task task8 = PropertyServiceFunctionUser.createUserTask("taskNode8", "noop");
+        final Task task9 = PropertyServiceFunctionUser.createUserTask("taskNode9", "noop");
+        EnactmentGraph graph = new EnactmentGraph();
+        PropertyServiceData.setContent(comm1, new JsonPrimitive(true));
+        PropertyServiceDependency.addDataDependency(comm1, task1, "key1", graph);
+
+        PropertyServiceDependency.addDataDependency(task1, comm2, "key1", graph);
+
+        PropertyServiceDependency.addDataDependency(comm2, task2, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm2, task3, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm2, task4, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(task2, comm3, "key2", graph);
+        PropertyServiceDependency.addDataDependency(task2, comm4, "key2", graph);
+        PropertyServiceDependency.addDataDependency(task4, comm6, "key2", graph);
+        PropertyServiceDependency.addDataDependency(task3, comm5, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(comm3, task5, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm4, task6, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm5, task6, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm6, task7, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(task5, comm7, "key2", graph);
+        PropertyServiceDependency.addDataDependency(task6, comm8, "key2", graph);
+        PropertyServiceDependency.addDataDependency(task7, comm9, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(comm7, task8, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm8, task8, "key2", graph);
+        PropertyServiceDependency.addDataDependency(comm9, task8, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(task8, comm10, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(comm10, task9, "key2", graph);
+
+        PropertyServiceDependency.addDataDependency(task9, comm11, "key2", graph);
+
+        PropertyServiceData.makeRoot(comm1);
+        PropertyServiceData.makeLeaf(comm11);
+        return graph;
+    }
+
 }

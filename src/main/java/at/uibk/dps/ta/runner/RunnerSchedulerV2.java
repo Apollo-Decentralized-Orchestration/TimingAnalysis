@@ -8,7 +8,9 @@ import at.uibk.dps.ee.io.spec.SpecificationProviderFile;
 import at.uibk.dps.ee.model.graph.*;
 import at.uibk.dps.ee.visualization.model.EnactmentGraphViewer;
 import at.uibk.dps.ta.tmp.eGraphs;
+import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
+import net.sf.opendse.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,14 @@ public class RunnerSchedulerV2 {
         MappingsConcurrent mappings = specification.getMappings();
         mappings.mappingStream().forEach((map) -> PropertyServiceScheduler.setDuration(map, 2000.0));
 
+        for(Mapping<Task, Resource> map: mappings) {
+            if(map.getTarget().getId().contains("http")) {
+                map.setAttribute("Cost", 2.0);
+            } else {
+                map.setAttribute("Cost", 5.0);
+            }
+        }
+
         return specification;
     }
 
@@ -53,12 +63,12 @@ public class RunnerSchedulerV2 {
         // Get the eGraph and specification (including function durations, task mappings, latencies)EnactmentSpecification s = setupSpecification(eGraphs.getMediumSizedEnactmentGraph(), "src/test/resources/mapping.json");
         //EnactmentSpecification specification = setupSpecification(eGraphs.getMediumSizedEnactmentGraph(), "src/test/resources/mapping.json");
 
-        EnactmentSpecification specification = setupSpecification(eGraphs.getEnactmentGraphParallel(6,3), "src/test/resources/mapping_simple.json");
+        EnactmentSpecification specification = setupSpecification(eGraphs.getEnactmentGraphParallel(4,2), "src/test/resources/mapping_simple.json");
 
         // --> Scheduling
 
             // This is the adapted HEFT scheduler
-            new Scheduler(latencyMappings).schedule(specification);
+            new Scheduler(latencyMappings).schedule(specification, 36.0);
 
             // TODO check why it is not in parallel Local-Cloud, then Cloud-Local, then Local-Cloud, then Cloud-Local, ...
 

@@ -72,7 +72,7 @@ public class RunnerSchedulerV2AFCL {
         // --> Scheduling
 
             // This is the adapted HEFT scheduler
-            new Scheduler(latencyMappings).schedule(specification);
+            new Scheduler(latencyMappings).schedule(specification, 5.0);
 
 
             // After scheduling two things should be done:

@@ -1,0 +1,25 @@
+[
+  {
+    "functionType": "noop",
+    "resources": [
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "Vs"
+        }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "Vm"
+        }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": "Vl"
+        }
+      }
+    ]
+  }
+]

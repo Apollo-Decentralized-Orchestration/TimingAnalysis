@@ -57,7 +57,7 @@ public class RunnerFile2 {
         // --> Scheduling
 
         // This is the adapted HEFT scheduler
-        //List<Cut> cuts = new Scheduler().schedule(specification);
+        //List<Cut> cuts = new JIT().schedule(specification);
 
         // After scheduling two things should be done:
 

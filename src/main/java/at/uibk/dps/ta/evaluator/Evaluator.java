@@ -79,7 +79,7 @@ public class Evaluator {
     public double evaluate(final EnactmentSpecification specification, final List<Cut> cuts) {
 
         // Use scheduler functionality
-        /*Scheduler scheduler = new Scheduler();
+        /*JIT scheduler = new JIT();
 
         // Get the enactment graph
         EnactmentGraph eGraph = specification.getEnactmentGraph();

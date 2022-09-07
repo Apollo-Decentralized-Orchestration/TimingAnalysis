@@ -56,7 +56,7 @@ public class Runner {
         EnactmentSpecification spec = new Runner().runEA(module);
 
         // Extract the cuts generated from the EA
-        Scheduler scheduler = new Scheduler();
+        JIT scheduler = new JIT();
         scheduler.setResources(spec);
         List<Cut> cuts = scheduler.extractCuts(spec.getEnactmentGraph(), scheduler.rankAndSort(spec));
 
